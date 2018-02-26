@@ -1,0 +1,58 @@
+class Susestvo(pygame.sprite.Sprite):
+    image = load_image("fire.png")
+    def __init__(self):
+        super().__init__(all_sprites)
+        self.image = Susestvo.image
+        self.add(susestvo_grop)
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = 940
+        self.rect.y = 300
+        self.speed = 2
+
+    def dvig(self):
+        if self.rect.y < 100 or self.rect.y > 420:
+            self.speed = - self.speed
+        self.rect.y += self.speed
+
+    def attac(self):
+        meteor = Meteor(self.rect.x - 100,self.rect.y + 30 )
+
+
+class Meteor(pygame.sprite.Sprite):
+    image = load_image("meteor.png")
+
+    def __init__(self,x,y):
+        super().__init__(all_sprites)
+        self.image = Meteor.image
+        self.add(susestvo_grop)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.mask = pygame.mask.from_surface(self.image)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+clock = pygame.time.Clock()
+susestv = Susestvo()
+time1 = pygame.time.get_ticks()
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    susestv.dvig()
+    time2 = pygame.time.get_ticks()
+    if time2 - time1 >= 5000:
+        susestv.attac()
+        time1 = pygame.time.get_ticks()
